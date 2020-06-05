@@ -9,7 +9,10 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import { connect } from "react-redux";
+
 import Appicon from "../../images/talk64.png";
+import * as actions from "../../redux/actions/index";
 
 const styles = {
   form: {
@@ -42,7 +45,6 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [handler, sethandler] = useState("");
-  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -51,17 +53,7 @@ const Login = (props) => {
         email: email,
         password: password,
       };
-      setLoading(true);
-      axios
-        .post("/signin", loginData)
-        .then((res) => {
-          setLoading(false);
-          props.history.push("/");
-        })
-        .catch((err) => {
-          setErrors(err.response.data);
-          setLoading(false);
-        });
+      props.submitForm(false, loginData, props.history);
     } else {
       const signupData = {
         email: email,
@@ -69,17 +61,7 @@ const Login = (props) => {
         confirmPassword: confirmPassword,
         handler: handler,
       };
-      setLoading(true);
-      axios
-        .post("/signup", signupData)
-        .then((res) => {
-          setLoading(false);
-          props.history.push("/");
-        })
-        .catch((err) => {
-          setErrors(err.response.data);
-          setLoading(false);
-        });
+      props.submitForm(true, signupData, props.history);
     }
   };
   const handleInput = (event) => {
@@ -108,7 +90,7 @@ const Login = (props) => {
       <Grid item sm>
         <img src={Appicon} alt="scream" className={classes.image} />
         <Typography variant="h4" className={classes.title}>
-          Login
+          {loginMode ? "Login" : "Signup"}
         </Typography>
         <form noValidate onSubmit={handleSubmit}>
           <TextField
@@ -173,10 +155,10 @@ const Login = (props) => {
             variant="contained"
             className={classes.button}
             color="primary"
-            disabled={loading}
+            disabled={props.loading}
             disableFocusRipple={true}
           >
-            {loading ? (
+            {props.loading ? (
               <CircularProgress size={20} className={classes.spinner} />
             ) : (
               ""
@@ -200,6 +182,22 @@ const Login = (props) => {
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = (state) => {
+  return {
+    loading: state.authReducer.loading,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitForm: (isSignup, authData, history) =>
+      dispatch(actions.authStart(isSignup, authData, history)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Login));

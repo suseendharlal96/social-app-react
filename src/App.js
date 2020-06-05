@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { ThemeProvider,createMuiTheme } from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import "./App.css";
 import Home from "./components/pages/home";
@@ -34,18 +34,16 @@ const App = () => {
   });
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <BrowserRouter>
-          <Navbar />
-          <div className="container">
-            <Switch>
-              <Route exact component={Home} path="/" />
-              <Route component={Login} path="/login" />
-              <Route component={Signup} path="/signup" />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Navbar />
+        <div className="container">
+          <Switch>
+            <Route exact component={Home} path="/" />
+            <Route component={Login} path="/login" />
+            <Route component={Signup} path="/signup" />
+          </Switch>
+        </div>
+      </BrowserRouter>
     </ThemeProvider>
   );
 };
