@@ -1,2 +1,3 @@
 export { authStart } from "./authaction";
-export { getProfile } from "./useraction";
+export { getScreams } from "./screamaction";
+export { imageUpload } from "./useraction";
