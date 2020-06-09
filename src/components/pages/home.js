@@ -4,6 +4,7 @@ import axios from "axios";
 import Grid from "@material-ui/core/Grid";
 
 import Scream from "../../components/Scream";
+import Profile from "../../components/Profile";
 
 const Home = () => {
   const [screams, setScreams] = useState(null);
@@ -29,7 +30,9 @@ const Home = () => {
         {screamData}
       </Grid>
       <Grid item sm={4} xs={12}>
-        <p>Profile</p>
+        <p>
+          <Profile />
+        </p>
       </Grid>
     </Grid>
   );
