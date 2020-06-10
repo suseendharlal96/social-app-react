@@ -21,9 +21,10 @@ const getProfileFail = () => {
   };
 };
 
-export const getProfile = () => {
+export const getProfile = (token) => {
   return (dispatch) => {
     dispatch(getProfileStart());
+    axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
     axios
       .get("/user/profileDetails")
       .then((res) => {

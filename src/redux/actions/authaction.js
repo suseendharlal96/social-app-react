@@ -22,19 +22,6 @@ const authFail = (error) => {
   };
 };
 
-const getProfileSuccess = (userData) => {
-  return {
-    type: actionTypes.GET_PROFILE_SUCCESS,
-    userData: userData,
-  };
-};
-
-const getProfileFail = () => {
-  return {
-    type: actionTypes.GET_PROFILE_FAIL,
-  };
-};
-
 export const authStart = (isSignup, authData, history) => {
   return (dispatch) => {
     dispatch(setLoading());
@@ -46,18 +33,7 @@ export const authStart = (isSignup, authData, history) => {
       .post(url, authData)
       .then((res) => {
         dispatch(authSuccess(res.data));
-        axios
-          .get("/user/profileDetails")
-          .then((res) => {
-            dispatch(getProfileSuccess(res.data));
-            history.push("/");
-            console.log(res);
-            console.log(res.data);
-          })
-          .catch((err) => {
-            dispatch(getProfileFail());
-            console.log(err.response.data);
-          });
+        history.push("/");
       })
       .catch((err) => {
         // dispatch(authFail(err.response.data));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom/Link";
 
 import { connect } from "react-redux";
@@ -13,6 +13,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
+
+import * as actions from "../redux/actions/index";
 
 const styles = (theme) => ({
   paper: {
@@ -62,11 +64,16 @@ const styles = (theme) => ({
   },
 });
 const Profile = (props) => {
+  useEffect(() => {
+    if (props.authenticated) {
+      props.getProfile(props.token);
+    }
+  }, []);
   const { classes } = props;
   let profile = (
     <React.Fragment>
       {!props.loading ? (
-        props.authenticated ? (
+        props.authenticated && props.userData ? (
           <Paper className={classes.paper}>
             <div className={classes.profile}>
               <div className="image-wrapper">
@@ -131,7 +138,7 @@ const Profile = (props) => {
             </div>
           </Paper>
         ) : (
-          <Paper className={styles.paper} variant="body2" align="center">
+          <Paper className={classes.paper} variant="body2" align="center">
             <Typography>Login to view your profile</Typography>
           </Paper>
         )
@@ -145,9 +152,18 @@ const Profile = (props) => {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.authReducer.idToken !== null,
+    token: state.authReducer.idToken,
     loading: state.userReducer.loading,
     userData: state.userReducer.userData,
   };
 };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getProfile: (token) => dispatch(actions.getProfile(token)),
+  };
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(Profile));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Profile));
