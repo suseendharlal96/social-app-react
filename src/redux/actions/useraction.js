@@ -37,3 +37,18 @@ export const getProfile = (token) => {
       });
   };
 };
+
+export const imageUpload = (formData) => {
+  console.log(formData);
+  return (dispatch) => {
+    axios
+      .post("/user/image", formData)
+      .then(() => {
+        dispatch(getProfile());
+        console.log("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

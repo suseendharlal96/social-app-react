@@ -8,11 +8,14 @@ import dayjs from "dayjs";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import MuiLink from "@material-ui/core/Link";
+import Tooltip from "@material-ui/core/Tooltip";
+import IconButton from "@material-ui/core/IconButton";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import LocationOn from "@material-ui/icons/LocationOn";
 import LinkIcon from "@material-ui/icons/Link";
 import CalendarToday from "@material-ui/icons/CalendarToday";
+import Edit from "@material-ui/icons/Edit";
 
 import * as actions from "../redux/actions/index";
 
@@ -70,6 +73,17 @@ const Profile = (props) => {
     }
   }, []);
   const { classes } = props;
+  const changeImage = (event) => {
+    const image = event.target.files[0];
+    const formData = new FormData();
+    console.log(image);
+    formData.append("image", image, image.name);
+    props.uploadImage(formData);
+  };
+  const editPicture = () => {
+    const fileInput = document.getElementById("imageUpload");
+    fileInput.click();
+  };
   let profile = (
     <React.Fragment>
       {!props.loading ? (
@@ -82,6 +96,17 @@ const Profile = (props) => {
                   src={props.userData.credentials.imgUrl}
                   alt="profile"
                 />
+                <input
+                  type="file"
+                  id="imageUpload"
+                  hidden="hidden"
+                  onChange={changeImage}
+                />
+                <Tooltip title="Edit profile picture" placement="top">
+                  <IconButton onClick={editPicture} className="button">
+                    <Edit color="primary" />
+                  </IconButton>
+                </Tooltip>
               </div>
               <hr />
               <div className="profile-details">
@@ -160,6 +185,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     getProfile: (token) => dispatch(actions.getProfile(token)),
+    uploadImage: (formData) => dispatch(actions.imageUpload(formData)),
   };
 };
 
