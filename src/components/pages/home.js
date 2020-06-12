@@ -14,7 +14,9 @@ const Home = (props) => {
   }, [props.userData]);
   const screamData = !props.loading ? (
     props.screamData ? (
-      props.screamData.map((sc, index) => <Scream key={index} scream={sc} />)
+      props.screamData.map((sc, index) => (
+        <Scream key={sc.screamId} scream={sc} />
+      ))
     ) : (
       <p>No screams found</p>
     )
