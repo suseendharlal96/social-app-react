@@ -5,6 +5,7 @@ export {
   likeScream,
   unlikeScream,
   deleteScream,
+  postScream,
 } from "./screamaction";
 
 export { getProfile, imageUpload } from "./useraction";

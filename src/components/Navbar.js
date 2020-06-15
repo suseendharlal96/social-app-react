@@ -10,11 +10,11 @@ import IconButton from "@material-ui/core/IconButton";
 
 import HomeIcon from "@material-ui/icons/Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import PostAddIcon from "@material-ui/icons/PostAdd";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import * as actions from "../redux/actions/index";
+import CreateScream from "./CreateScream";
 
 const Navbar = (props) => {
   const logout = () => {
@@ -33,11 +33,7 @@ const Navbar = (props) => {
                 </Link>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Post a scream" placement="top">
-              <IconButton>
-                <PostAddIcon />
-              </IconButton>
-            </Tooltip>
+            <CreateScream />
             <Tooltip title="Notifications" placement="top">
               <IconButton>
                 <NotificationsIcon />

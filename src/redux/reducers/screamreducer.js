@@ -2,6 +2,8 @@ import * as actionTypes from "../actions/actiontypes";
 
 const initState = {
   loading: false,
+  postloading: false,
+  errors: null,
   screamData: [],
 };
 const screamStore = (state = initState, action) => {
@@ -10,6 +12,7 @@ const screamStore = (state = initState, action) => {
       return {
         ...state,
         loading: true,
+        postloading: false,
         errors: null,
       };
 
@@ -17,8 +20,12 @@ const screamStore = (state = initState, action) => {
       console.log(action.screamData);
       return {
         ...state,
-        screamData: action.screamData,
+        screamData: action.screamData.sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        ),
         loading: false,
+        postloading: false,
         errors: null,
       };
 
@@ -26,6 +33,7 @@ const screamStore = (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        postloading: false,
         errors: action.errors,
       };
 
@@ -37,16 +45,45 @@ const screamStore = (state = initState, action) => {
       state.screamData[screamIndex] = action.likeunlikeData;
       return {
         ...state,
+        errors: null,
+        postloading: false,
       };
 
     case actionTypes.DELETE_SCREAM_SUCCESS:
       return {
         ...state,
+        errors: null,
+        postloading: false,
         screamData: state.screamData.filter(
           (scream) => scream.screamId !== action.deletedId
         ),
       };
-      
+
+    case actionTypes.POST_SCREAM_START:
+      return {
+        ...state,
+        errors: null,
+        loading: false,
+        postloading: true,
+      };
+
+    case actionTypes.POST_SCREAM_SUCCESS:
+      return {
+        ...state,
+        errors: null,
+        loading: false,
+        postloading: false,
+        screamData: state.screamData.concat(action.scream).reverse(),
+      };
+
+    case actionTypes.POST_SCREAM_FAIL:
+      return {
+        ...state,
+        errors: action.error,
+        loading: false,
+        postloading: false,
+      };
+
     default:
       return state;
   }

@@ -93,3 +93,40 @@ export const deleteScream = (screamId, token) => {
       .catch((err) => console.log(err));
   };
 };
+
+const postScreamStart = () => {
+  return {
+    type: actionType.POST_SCREAM_START,
+  };
+};
+
+const postScreamSuccess = (scream) => {
+  return {
+    type: actionType.POST_SCREAM_SUCCESS,
+    scream: scream,
+  };
+};
+
+const postScreamFail = (error) => {
+  return {
+    type: actionType.POST_SCREAM_FAIL,
+    errors: error,
+  };
+};
+
+export const postScream = (screamData, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  return (dispatch) => {
+    dispatch(postScreamStart());
+    axios
+      .post("/createScream", screamData)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(postScreamSuccess(res.data));
+      })
+      .catch((err) => {
+        dispatch(postScreamFail(err.response.data));
+        console.log(err);
+      });
+  };
+};

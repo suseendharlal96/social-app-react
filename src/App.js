@@ -41,9 +41,6 @@ const App = () => {
             <Route component={Home} path="/home" />
             <Route component={Login} path="/login" />
             <Route component={Signup} path="/signup" />
-            <Route
-              render={() => <Redirect from="*" to={{ pathname: "/home" }} />}
-            />
           </Switch>
         </div>
       </BrowserRouter>

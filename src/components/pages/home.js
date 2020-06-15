@@ -25,7 +25,7 @@ const Home = (props) => {
   );
   return (
     <Grid container spacing={4}>
-      <Grid item sm={8} xs={12}>
+      <Grid style={{ height: "600px", overflow: "auto" }} item sm={8} xs={12}>
         {screamData}
       </Grid>
       <Grid item sm={4} xs={12}>
