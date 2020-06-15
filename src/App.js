@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
@@ -38,9 +38,12 @@ const App = () => {
         <Navbar />
         <div className="container">
           <Switch>
-            <Route exact component={Home} path="/" />
+            <Route component={Home} path="/home" />
             <Route component={Login} path="/login" />
             <Route component={Signup} path="/signup" />
+            <Route
+              render={() => <Redirect from="*" to={{ pathname: "/home" }} />}
+            />
           </Switch>
         </div>
       </BrowserRouter>
