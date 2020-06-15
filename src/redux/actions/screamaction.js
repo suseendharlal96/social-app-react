@@ -34,3 +34,62 @@ export const getScreams = () => {
       });
   };
 };
+
+const likeScreamSuccess = (data) => {
+  return {
+    type: actionType.LIKE_SCREAM_SUCCESS,
+    likeunlikeData: data,
+  };
+};
+
+const unlikeScreamSuccess = (data) => {
+  return {
+    type: actionType.UNLIKE_SCREAM_SUCCESS,
+    likeunlikeData: data,
+  };
+};
+
+export const likeScream = (screamId, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  return (dispatch) => {
+    axios
+      .get(`/scream/${screamId}/like`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(likeScreamSuccess(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const unlikeScream = (screamId, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  return (dispatch) => {
+    axios
+      .get(`/scream/${screamId}/unlike`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(unlikeScreamSuccess(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+const deleteScreamSuccess = (screamId) => {
+  return {
+    type: actionType.DELETE_SCREAM_SUCCESS,
+    deletedId: screamId,
+  };
+};
+
+export const deleteScream = (screamId, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  return (dispatch) => {
+    axios
+      .delete(`/scream/${screamId}`)
+      .then((res) => {
+        dispatch(deleteScreamSuccess(screamId));
+      })
+      .catch((err) => console.log(err));
+  };
+};

@@ -36,7 +36,14 @@ export const authStart = (isSignup, authData, history) => {
         history.push("/");
       })
       .catch((err) => {
-        // dispatch(authFail(err.response.data));
+        console.log(err);
+        dispatch(authFail(err));
       });
+  };
+};
+
+export const logout = () => {
+  return {
+    type: actionTypes.LOGOUT,
   };
 };

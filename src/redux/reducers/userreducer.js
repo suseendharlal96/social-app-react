@@ -26,6 +26,30 @@ const userStore = (state = initState, action) => {
         loading: false,
         errors: action.errors,
       };
+    case actionTypes.LIKE_SCREAM_SUCCESS:
+      console.log(state.userData);
+      console.log(action.likeunlikeData);
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          likes: state.userData.likes.concat({
+            screamId: action.likeunlikeData.screamId,
+            handler: state.userData.credentials.handler,
+          }),
+        },
+      };
+    case actionTypes.UNLIKE_SCREAM_SUCCESS:
+      console.log(state.userData);
+      return {
+        ...state,
+        userData: {
+          ...state.userData,
+          likes: state.userData.likes.filter(
+            (like) => like.screamId !== action.likeunlikeData.screamId
+          ),
+        },
+      };
     default:
       return state;
   }

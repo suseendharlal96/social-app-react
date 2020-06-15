@@ -11,11 +11,11 @@ import * as actions from "../../redux/actions/index";
 const Home = (props) => {
   useEffect(() => {
     props.getScreams();
-  }, [props.userData]);
+  }, []);
   const screamData = !props.loading ? (
     props.screamData ? (
       props.screamData.map((sc, index) => (
-        <Scream key={sc.screamId} scream={sc} />
+        <Scream key={sc.screamId} screamId={sc.screamId} scream={sc} />
       ))
     ) : (
       <p>No screams found</p>
