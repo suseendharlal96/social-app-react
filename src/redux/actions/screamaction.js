@@ -35,6 +35,33 @@ export const getScreams = () => {
   };
 };
 
+const getIndividualScreamStart = () => {
+  return {
+    type: actionType.GET_INDIVIDUAL_SCREAM,
+  };
+};
+const getIndividualScreamSuccess = (scream) => {
+  return {
+    type: actionType.GET_INDIVIDUAL_SCREAM_SUCCESS,
+    scream: scream,
+  };
+};
+
+export const getIndividualScream = (screamId) => {
+  return (dispatch) => {
+    dispatch(getIndividualScreamStart());
+    axios
+      .get(`/scream/${screamId}`)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(getIndividualScreamSuccess(res.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 const likeScreamSuccess = (data) => {
   return {
     type: actionType.LIKE_SCREAM_SUCCESS,

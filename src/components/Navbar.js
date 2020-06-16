@@ -28,7 +28,7 @@ const Navbar = (props) => {
           <React.Fragment>
             <Tooltip title="Home" placement="top">
               <IconButton>
-                <Link to="/home">
+                <Link to="/">
                   <HomeIcon />
                 </Link>
               </IconButton>
@@ -49,7 +49,7 @@ const Navbar = (props) => {
           <React.Fragment>
             <Tooltip title="Home" placement="top">
               <IconButton>
-                <Link to="/home">
+                <Link to="/">
                   <HomeIcon />
                 </Link>
               </IconButton>

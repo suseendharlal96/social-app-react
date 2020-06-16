@@ -21,6 +21,7 @@ const styles = {
   submitbutton: {
     position: "relative",
     marginTop: "15px",
+    float: "right",
   },
   progress: { position: "absolute" },
 };

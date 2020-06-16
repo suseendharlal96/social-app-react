@@ -38,9 +38,14 @@ const App = () => {
         <Navbar />
         <div className="container">
           <Switch>
-            <Route component={Home} path="/home" />
+            <Route component={Home} exact path="/" />
             <Route component={Login} path="/login" />
             <Route component={Signup} path="/signup" />
+            <Route
+              render={() => (
+                <Redirect from={{ pathname: "*" }} to={{ pathname: "/" }} />
+              )}
+            />
           </Switch>
         </div>
       </BrowserRouter>

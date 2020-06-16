@@ -19,6 +19,7 @@ import FavouriteIcon from "@material-ui/icons/Favorite";
 import FavouriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import DeleteScream from "./DeleteScream";
+import ScreamDetails from "./ScreamDetails";
 import * as actions from "../redux/actions/index";
 
 const styles = {
@@ -28,7 +29,8 @@ const styles = {
     marginBottom: "15px",
   },
   image: {
-    minWidth: "200px",
+    width: "200px",
+    height: "200px",
   },
   content: {
     padding: 20,
@@ -114,7 +116,7 @@ const Scream = (props) => {
         <Typography
           variant="h5"
           component={Link}
-          to={`/users/${handler}`}
+          to={`user/${handler}`}
           color="primary"
         >
           {handler}
@@ -136,6 +138,7 @@ const Scream = (props) => {
         <span>
           {commentCount} {+commentCount > 1 ? "comments" : "comment"}
         </span>
+        <ScreamDetails scream={props.scream} />
       </CardContent>
     </Card>
   );

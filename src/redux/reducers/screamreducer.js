@@ -3,8 +3,10 @@ import * as actionTypes from "../actions/actiontypes";
 const initState = {
   loading: false,
   postloading: false,
+  individualLoading: false,
   errors: null,
   screamData: [],
+  singleScream: [],
 };
 const screamStore = (state = initState, action) => {
   switch (action.type) {
@@ -84,6 +86,21 @@ const screamStore = (state = initState, action) => {
         postloading: false,
       };
 
+    case actionTypes.GET_INDIVIDUAL_SCREAM:
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        individualLoading: true,
+        postloading: false,
+      };
+
+    case actionTypes.GET_INDIVIDUAL_SCREAM_SUCCESS:
+      return {
+        ...state,
+        individualLoading: false,
+        singleScream: state.singleScream.concat(action.scream),
+      };
     default:
       return state;
   }

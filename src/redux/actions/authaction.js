@@ -33,7 +33,7 @@ export const authStart = (isSignup, authData, history) => {
       .post(url, authData)
       .then((res) => {
         dispatch(authSuccess(res.data));
-        history.push("/home");
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);
