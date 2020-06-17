@@ -35,12 +35,10 @@ const styles = {
 
 const ScreamDetails = (props) => {
   const [dialogue, setdialogue] = useState(false);
-
   const { classes } = props;
 
   const toggle = () => {
     setdialogue(!dialogue);
-    props.singleScream.screamId = undefined;
     if (
       dialogue !== true &&
       !props.singleScream.find(
@@ -104,7 +102,7 @@ const ScreamDetails = (props) => {
                     </Grid>
                   </ExpansionPanelDetails>
                   {singleScream.comments &&
-                    singleScream.comments.length > 1 && (
+                    singleScream.comments.length >= 1 && (
                       <ScreamComments comments={singleScream.comments} />
                     )}
                 </React.Fragment>

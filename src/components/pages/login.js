@@ -169,6 +169,7 @@ const Login = (props) => {
           variant="outlined"
           className={classes.mode}
           color="secondary"
+          disabled={props.loading}
           onClick={toggleMode}
         >
           {loginMode ? "Switch to Signup" : "Switch to login"}

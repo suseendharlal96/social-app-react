@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -11,6 +11,13 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from "@material-ui/core/Tooltip";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 
@@ -20,6 +27,7 @@ import FavouriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import DeleteScream from "./DeleteScream";
 import ScreamDetails from "./ScreamDetails";
+
 import * as actions from "../redux/actions/index";
 
 const styles = {
@@ -38,6 +46,9 @@ const styles = {
 };
 const Scream = (props) => {
   dayjs.extend(relativeTime);
+
+  const [dialogueBox, setdialogueBox] = useState(false);
+  const [comment, setComment] = useState("");
 
   const {
     classes,
@@ -59,10 +70,8 @@ const Scream = (props) => {
       props.userData.likes &&
       props.userData.likes.find((like) => like.screamId === props.screamId)
     ) {
-      console.log(1);
       return true;
     } else {
-      console.log(2);
       return false;
     }
   };
@@ -73,6 +82,24 @@ const Scream = (props) => {
 
   const unlikeScream = () => {
     props.unlikeScream(screamId, props.token);
+  };
+
+  const handleOpen = () => {
+    setdialogueBox(true);
+  };
+
+  const handleClose = () => {
+    setdialogueBox(false);
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const postComment = () => {
+    props.postComment(screamId, { comment: comment }, props.token);
+    setdialogueBox(false);
+    setComment("");
   };
 
   const likeButton = !props.authenticated ? (
@@ -95,6 +122,51 @@ const Scream = (props) => {
         <FavouriteBorderIcon color="secondary" />
       </IconButton>
     </Tooltip>
+  );
+
+  const commentButton = !props.authenticated ? (
+    <Tooltip title="Post a comment" placement="top">
+      <IconButton>
+        <Link to="/login">
+          <ChatIcon color="primary" />
+        </Link>
+      </IconButton>
+    </Tooltip>
+  ) : (
+    <React.Fragment>
+      <Tooltip title="Post a comment" placement="top">
+        <IconButton onClick={handleOpen}>
+          <ChatIcon color="primary" />
+        </IconButton>
+      </Tooltip>
+      <Dialog open={dialogueBox} onClose={handleClose} fullWidth maxWidth="sm">
+        <DialogTitle>Comment Dialogue</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Your comments will be posted publicly.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            value={comment}
+            id="name"
+            label="Comment"
+            placeholder="Post a comment..."
+            type="text"
+            onChange={handleCommentChange}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="secondary">
+            Cancel
+          </Button>
+          <Button onClick={postComment} color="primary">
+            Post comment
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   );
 
   const deleteScreamButton =
@@ -128,13 +200,16 @@ const Scream = (props) => {
         <Typography variant="body1">{scream}</Typography>
         {likeButton}
         <span>
-          {likeCount} {+likeCount > 1 ? "Likes" : "Like"}
+          {!props.userLoading &&
+          props.userData &&
+          props.userData.likes &&
+          props.userData.likes.find((like) => like.screamId === props.screamId)
+            ? `Liked by you and ${+likeCount - 1} ${
+                +likeCount - 1 > 1 ? "others" : "other"
+              }`
+            : `${+likeCount} likes`}
         </span>
-        <Tooltip title="Post a comment" placement="top">
-          <IconButton>
-            <ChatIcon color="primary" />
-          </IconButton>
-        </Tooltip>
+        {commentButton}
         <span>
           {commentCount} {+commentCount > 1 ? "comments" : "comment"}
         </span>
@@ -158,6 +233,8 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.likeScream(screamId, token)),
     unlikeScream: (screamId, token) =>
       dispatch(actions.unlikeScream(screamId, token)),
+    postComment: (screamId, comment, token) =>
+      dispatch(actions.postComment(screamId, comment, token)),
   };
 };
 

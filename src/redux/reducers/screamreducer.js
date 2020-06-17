@@ -19,7 +19,6 @@ const screamStore = (state = initState, action) => {
       };
 
     case actionTypes.GET_SCREAM_SUCCESS:
-      console.log(action.screamData);
       return {
         ...state,
         screamData: action.screamData.sort(
@@ -100,6 +99,34 @@ const screamStore = (state = initState, action) => {
         ...state,
         individualLoading: false,
         singleScream: state.singleScream.concat(action.scream),
+      };
+
+    case actionTypes.POST_COMMENT_SUCCESS:
+      // for updating comment count in main display
+      const index = state.screamData.findIndex(
+        (scream) => scream.screamId === action.screamId
+      );
+      const updatedScreamData = JSON.parse(JSON.stringify(state.screamData));
+      updatedScreamData[index].commentCount += 1;
+
+      // for updating comments & count inside scream details display
+      const scindex = state.singleScream.findIndex(
+        (scream) => scream.screamId === action.screamId
+      );
+      const updatedSingleScream = JSON.parse(
+        JSON.stringify(state.singleScream)
+      );
+      updatedSingleScream[scindex].comments.unshift(action.commentData);
+      return {
+        ...state,
+        screamData: updatedScreamData,
+        singleScream: updatedSingleScream,
+      };
+
+    case actionTypes.POST_COMMENT_FAIL:
+      return {
+        ...state,
+        errors: action.errors,
       };
     default:
       return state;

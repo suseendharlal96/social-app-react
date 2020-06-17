@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Grid from "@material-ui/core/Grid";
@@ -28,6 +29,8 @@ const styles = {
 };
 
 const ScreamComments = (props) => {
+  dayjs.extend(relativeTime);
+
   const [comment, setcomment] = useState(false);
 
   const { classes } = props;
@@ -69,8 +72,10 @@ const ScreamComments = (props) => {
                       {comment.handler}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      Commented on :{" "}
-                      {dayjs(comment.createdAt).format("h:mm a, DD MMM YYYY")}
+                      Commented on :
+                      <br />
+                      {dayjs(comment.createdAt).format("h:mm a, DD MMM YYYY")}(
+                      {dayjs(comment.createdAt).fromNow()})
                     </Typography>
                     <hr className={classes.invisibleBorder} />
                     <Typography variant="body1">{comment.desc}</Typography>

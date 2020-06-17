@@ -157,3 +157,34 @@ export const postScream = (screamData, token) => {
       });
   };
 };
+
+const postCommentSuccess = (data, screamId) => {
+  return {
+    type: actionType.POST_COMMENT_SUCCESS,
+    commentData: data,
+    screamId: screamId,
+  };
+};
+
+const postCommentFail = (error) => {
+  return {
+    type: actionType.POST_COMMENT_FAIL,
+    error: error,
+  };
+};
+
+export const postComment = (screamId, comment, token) => {
+  return (dispatch) => {
+    axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+    axios
+      .post(`/scream/${screamId}/comment`, comment)
+      .then((res) => {
+        console.log(res.data);
+        dispatch(postCommentSuccess(res.data, screamId));
+      })
+      .catch((err) => {
+        dispatch(postCommentFail(err));
+        console.log(err);
+      });
+  };
+};

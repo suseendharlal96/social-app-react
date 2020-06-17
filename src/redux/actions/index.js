@@ -6,7 +6,8 @@ export {
   unlikeScream,
   deleteScream,
   postScream,
-  getIndividualScream
+  getIndividualScream,
+  postComment
 } from "./screamaction";
 
 export { getProfile, imageUpload } from "./useraction";

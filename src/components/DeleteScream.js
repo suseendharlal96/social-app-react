@@ -31,7 +31,7 @@ const DeleteScream = (props) => {
   };
 
   const handleClose = () => {
-    setdialogue(true);
+    setdialogue(false);
   };
 
   const deleteScream = () => {
