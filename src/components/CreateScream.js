@@ -59,7 +59,7 @@ const CreateScream = (props) => {
         </IconButton>
       </Tooltip>
       <Dialog open={dialogue} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>Are you sure want to post this scream?</DialogTitle>
+        <DialogTitle>Post your Scream</DialogTitle>
         <DialogContent>
           <form onSubmit={postScream}>
             <TextField

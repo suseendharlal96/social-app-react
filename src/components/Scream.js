@@ -38,6 +38,7 @@ const styles = {
   },
   image: {
     width: "200px",
+    minWidth: "200px",
     height: "200px",
   },
   content: {

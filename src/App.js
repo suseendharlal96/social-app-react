@@ -6,7 +6,7 @@ import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import "./App.css";
 import Home from "./components/pages/home";
 import Login from "./components/pages/login";
-import Signup from "./components/pages/signup";
+import UserProfile from "./components/pages/userdetail";
 import Navbar from "./components/Navbar";
 
 const App = () => {
@@ -40,7 +40,7 @@ const App = () => {
           <Switch>
             <Route component={Home} exact path="/" />
             <Route component={Login} path="/login" />
-            <Route component={Signup} path="/signup" />
+            <Route component={UserProfile} path="/user/:userhandler" />
             <Route
               render={() => (
                 <Redirect from={{ pathname: "*" }} to={{ pathname: "/" }} />

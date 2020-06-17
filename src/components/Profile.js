@@ -168,7 +168,7 @@ const Profile = (props) => {
           </Paper>
         )
       ) : (
-        <div>loading</div>
+        <div>Loading profile...</div>
       )}
     </React.Fragment>
   );
