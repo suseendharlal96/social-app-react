@@ -39,7 +39,12 @@ const ScreamDetails = (props) => {
     console.log(props.openIndividualScream);
     if (props.openIndividualScream === "true" || props.openIndividualScream) {
       setdialogue(true);
-      props.getIndividualScream(props.scream.screamId);
+      if (
+        !props.singleScream.find(
+          (single) => single.screamId === props.scream.screamId
+        )
+      )
+        props.getIndividualScream(props.scream.screamId);
     }
   }, [props.openIndividualScream]);
   const { classes } = props;

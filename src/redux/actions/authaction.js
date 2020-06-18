@@ -36,8 +36,11 @@ export const authStart = (isSignup, authData, history) => {
         history.push("/");
       })
       .catch((err) => {
-        console.log(err);
-        dispatch(authFail(err));
+        console.log(err.response);
+        console.log(err.response.data);
+        if (err && err.response && err.response.data) {
+          dispatch(authFail(err.response.data));
+        }
       });
   };
 };

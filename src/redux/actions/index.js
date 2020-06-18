@@ -10,4 +10,9 @@ export {
   postComment,
 } from "./screamaction";
 
-export { getProfile, imageUpload, markNotificationRead } from "./useraction";
+export {
+  getProfile,
+  editProfile,
+  imageUpload,
+  markNotificationRead,
+} from "./useraction";

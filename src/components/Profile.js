@@ -18,6 +18,7 @@ import CalendarToday from "@material-ui/icons/CalendarToday";
 import Edit from "@material-ui/icons/Edit";
 
 import * as actions from "../redux/actions/index";
+import EditProfile from "./EditProfile";
 
 const styles = (theme) => ({
   paper: {
@@ -78,7 +79,7 @@ const Profile = (props) => {
     const formData = new FormData();
     console.log(image);
     formData.append("image", image, image.name);
-    props.uploadImage(formData);
+    props.uploadImage(formData, props.token);
   };
   const editPicture = () => {
     const fileInput = document.getElementById("imageUpload");
@@ -91,22 +92,28 @@ const Profile = (props) => {
           <Paper className={classes.paper}>
             <div className={classes.profile}>
               <div className="image-wrapper">
-                <img
-                  className="profile-image"
-                  src={props.userData.credentials.imgUrl}
-                  alt="profile"
-                />
-                <input
-                  type="file"
-                  id="imageUpload"
-                  hidden="hidden"
-                  onChange={changeImage}
-                />
-                <Tooltip title="Edit profile picture" placement="top">
-                  <IconButton onClick={editPicture} className="button">
-                    <Edit color="primary" />
-                  </IconButton>
-                </Tooltip>
+                {!props.imageLoading ? (
+                  <React.Fragment>
+                    <img
+                      className="profile-image"
+                      src={props.userData.credentials.imgUrl}
+                      alt="profile"
+                    />
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      hidden="hidden"
+                      onChange={changeImage}
+                    />
+                    <Tooltip title="Edit profile picture" placement="top">
+                      <IconButton onClick={editPicture} className="button">
+                        <Edit color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                  </React.Fragment>
+                ) : (
+                  <p>Loading image...</p>
+                )}
               </div>
               <hr />
               <div className="profile-details">
@@ -160,6 +167,7 @@ const Profile = (props) => {
                 )}
                 <hr />
               </div>
+              <EditProfile />
             </div>
           </Paper>
         ) : (
@@ -179,13 +187,15 @@ const mapStateToProps = (state) => {
     authenticated: state.authReducer.idToken !== null,
     token: state.authReducer.idToken,
     loading: state.userReducer.loading,
+    imageLoading: state.userReducer.imageLoading,
     userData: state.userReducer.userData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProfile: (token) => dispatch(actions.getProfile(token)),
-    uploadImage: (formData) => dispatch(actions.imageUpload(formData)),
+    getProfile: (token) => dispatch(actions.getProfile(token, false)),
+    uploadImage: (formData, token) =>
+      dispatch(actions.imageUpload(formData, token)),
   };
 };
 

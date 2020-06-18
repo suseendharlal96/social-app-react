@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actiontypes";
 
 const initState = {
   loading: false,
+  imageLoading: false,
   userData: null,
 };
 const userStore = (state = initState, action) => {
@@ -19,6 +20,7 @@ const userStore = (state = initState, action) => {
         ...state,
         userData: action.userData,
         loading: false,
+        imageLoading: false,
         errors: null,
       };
 
@@ -27,6 +29,24 @@ const userStore = (state = initState, action) => {
         ...state,
         loading: false,
         errors: action.errors,
+      };
+
+    case actionTypes.PROFILE_PIC_CHANGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        imageLoading: true,
+      };
+
+    case actionTypes.EDIT_PROFILE_SUCCESS:
+      console.log(action.editData);
+      const updateduserData = { ...state.userData };
+      updateduserData.credentials.bio = action.editData.bio;
+      updateduserData.credentials.website = action.editData.website;
+      updateduserData.credentials.location = action.editData.location;
+      return {
+        ...state,
+        userData: updateduserData,
       };
 
     case actionTypes.LIKE_SCREAM_SUCCESS:

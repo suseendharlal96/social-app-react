@@ -17,7 +17,6 @@ import PostAddIcon from "@material-ui/icons/PostAdd";
 import * as actions from "../redux/actions/index";
 
 const styles = {
-  textField: {},
   submitbutton: {
     position: "relative",
     marginTop: "15px",
@@ -38,7 +37,7 @@ const CreateScream = (props) => {
   };
 
   const handleClose = () => {
-    setdialogue(true);
+    setdialogue(false);
   };
 
   const handleChange = (event) => {
@@ -46,9 +45,13 @@ const CreateScream = (props) => {
   };
 
   const postScream = (event) => {
-    event.preventDefault();
-    props.postScream({ scream: scream }, props.token);
-    setdialogue(false);
+    if (scream.length > 0) {
+      event.preventDefault();
+      props.postScream({ scream: scream }, props.token);
+      setdialogue(false);
+    } else {
+      setErrors("Empty scream not allowed");
+    }
   };
 
   return (
@@ -70,8 +73,8 @@ const CreateScream = (props) => {
               multiline
               fullWidth
               rows="3"
-              errors={errors.scream}
-              helperText={errors.scream}
+              errors={errors}
+              helperText={errors.errors}
               className={classes.textField}
               onChange={handleChange}
             />

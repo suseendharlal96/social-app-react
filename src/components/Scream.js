@@ -202,7 +202,6 @@ const Scream = (props) => {
         {likeButton}
         <span>
           {props.authenticated &&
-          !props.userLoading &&
           props.userData &&
           props.userData.likes &&
           props.userData.likes.find((like) => like.screamId === props.screamId)
