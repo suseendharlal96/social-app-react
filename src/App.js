@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import axios from "axios";
+
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import "./App.css";
@@ -9,6 +11,8 @@ import Login from "./components/pages/login";
 import UserProfile from "./components/pages/userdetail";
 import Navbar from "./components/Navbar";
 
+axios.defaults.baseURL =
+  "https://us-central1-social-react-a5a3b.cloudfunctions.net/api";
 const App = () => {
   const theme = createMuiTheme({
     palette: {
