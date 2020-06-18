@@ -12,6 +12,7 @@ const userStore = (state = initState, action) => {
         loading: true,
         errors: null,
       };
+
     case actionTypes.GET_PROFILE_SUCCESS:
       console.log(action.userData);
       return {
@@ -20,12 +21,14 @@ const userStore = (state = initState, action) => {
         loading: false,
         errors: null,
       };
+
     case actionTypes.GET_PROFILE_FAIL:
       return {
         ...state,
         loading: false,
         errors: action.errors,
       };
+
     case actionTypes.LIKE_SCREAM_SUCCESS:
       console.log(state.userData);
       console.log(action.likeunlikeData);
@@ -39,6 +42,7 @@ const userStore = (state = initState, action) => {
           }),
         },
       };
+
     case actionTypes.UNLIKE_SCREAM_SUCCESS:
       console.log(state.userData);
       return {
@@ -50,6 +54,17 @@ const userStore = (state = initState, action) => {
           ),
         },
       };
+
+    case actionTypes.MARK_NOTIFICATIONS_READ:
+      if (state.userData.notifications && state.userData.notifications.length) {
+        state.userData.notifications.map((notify) => {
+          notify.read = true;
+        });
+      }
+      return {
+        ...state,
+      };
+
     default:
       return state;
   }

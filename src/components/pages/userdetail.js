@@ -57,9 +57,15 @@ const styles = {
 
 const UserDetails = (props) => {
   const [profile, setProfile] = useState(null);
+  const [screamId, setscreamId] = useState(null);
   const { classes } = props;
   useEffect(() => {
     const userhandler = props.match.params.userhandler;
+    const paramscreamId = props.match.params.screamId;
+    console.log(props.match);
+    if (paramscreamId) {
+      setscreamId(paramscreamId);
+    }
     axios
       .get(`/user/${userhandler}`)
       .then((res) => {
@@ -72,7 +78,7 @@ const UserDetails = (props) => {
   }, []);
   return (
     <React.Fragment>
-      <Grid container spacing={16}>
+      <Grid container spacing={6}>
         <Grid item sm={4} xs={12}>
           {profile
             ? profile.user && (
@@ -144,13 +150,31 @@ const UserDetails = (props) => {
         </Grid>
       </Grid>
       <hr />
-      <Grid container spacing={16}>
+      <Grid container spacing={6}>
         <Grid item sm={8} xs={12}>
           {profile
             ? profile.screams && profile.screams.length
-              ? profile.screams.map((scream) => (
-                  <Scream index={scream.screamId} scream={scream} />
-                ))
+              ? !screamId
+                ? profile.screams.map((scream) => {
+                    console.log(0);
+                    return <Scream key={scream.screamId} scream={scream} />;
+                  })
+                : profile.screams.map((scream) => {
+                    console.log(screamId);
+                    if (scream.screamId !== screamId) {
+                      console.log(1);
+                      return <Scream key={scream.screamId} scream={scream} />;
+                    } else {
+                      console.log(2);
+                      return (
+                        <Scream
+                          key={scream.screamId}
+                          scream={scream}
+                          openIndividualScream="true"
+                        />
+                      );
+                    }
+                  })
               : "No screams found"
             : "Loading screams..."}
         </Grid>

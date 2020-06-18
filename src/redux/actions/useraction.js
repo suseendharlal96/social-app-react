@@ -52,3 +52,22 @@ export const imageUpload = (formData) => {
       });
   };
 };
+
+const markNotificationReadSuccess = () => {
+  return {
+    type: actionTypes.MARK_NOTIFICATIONS_READ,
+  };
+};
+
+export const markNotificationRead = (notificationsId) => {
+  return (dispatch) => {
+    axios
+      .post("/notifications", notificationsId)
+      .then((res) => {
+        dispatch(markNotificationReadSuccess());
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};

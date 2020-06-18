@@ -201,7 +201,8 @@ const Scream = (props) => {
         <Typography variant="body1">{scream}</Typography>
         {likeButton}
         <span>
-          {!props.userLoading &&
+          {props.authenticated &&
+          !props.userLoading &&
           props.userData &&
           props.userData.likes &&
           props.userData.likes.find((like) => like.screamId === props.screamId)
@@ -214,7 +215,10 @@ const Scream = (props) => {
         <span>
           {commentCount} {+commentCount > 1 ? "comments" : "comment"}
         </span>
-        <ScreamDetails scream={props.scream} />
+        <ScreamDetails
+          scream={props.scream}
+          openIndividualScream={props.openIndividualScream || dialogueBox}
+        />
       </CardContent>
     </Card>
   );

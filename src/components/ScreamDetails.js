@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { connect } from "react-redux";
@@ -35,6 +35,13 @@ const styles = {
 
 const ScreamDetails = (props) => {
   const [dialogue, setdialogue] = useState(false);
+  useEffect(() => {
+    console.log(props.openIndividualScream);
+    if (props.openIndividualScream === "true" || props.openIndividualScream) {
+      setdialogue(true);
+      props.getIndividualScream(props.scream.screamId);
+    }
+  }, [props.openIndividualScream]);
   const { classes } = props;
 
   const toggle = () => {

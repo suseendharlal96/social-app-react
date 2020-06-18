@@ -40,6 +40,11 @@ const App = () => {
           <Switch>
             <Route component={Home} exact path="/" />
             <Route component={Login} path="/login" />
+            <Route
+              exact
+              component={UserProfile}
+              path="/user/:userhandler/scream/:screamId"
+            />
             <Route component={UserProfile} path="/user/:userhandler" />
             <Route
               render={() => (

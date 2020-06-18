@@ -7,7 +7,7 @@ export {
   deleteScream,
   postScream,
   getIndividualScream,
-  postComment
+  postComment,
 } from "./screamaction";
 
-export { getProfile, imageUpload } from "./useraction";
+export { getProfile, imageUpload, markNotificationRead } from "./useraction";
