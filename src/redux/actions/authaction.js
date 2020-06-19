@@ -32,13 +32,19 @@ export const authStart = (isSignup, authData, history) => {
     axios
       .post(url, authData)
       .then((res) => {
-        dispatch(authSuccess(res.data));
-        history.push("/");
+        if (!isSignup) {
+          dispatch(authSuccess(res.data));
+          history.push("/");
+        } else {
+          dispatch(authSuccess(res.data.token));
+          history.push("/");
+        }
       })
       .catch((err) => {
-        console.log(err.response);
-        console.log(err.response.data);
+        console.log(err);
         if (err && err.response && err.response.data) {
+          console.log(err.response);
+          console.log(err.response.data);
           dispatch(authFail(err.response.data));
         }
       });

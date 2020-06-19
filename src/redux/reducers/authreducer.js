@@ -9,7 +9,6 @@ const initialState = {
 const authStore = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_SUCCESS:
-      console.log(action);
       return {
         ...state,
         idToken: action.idToken,

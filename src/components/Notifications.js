@@ -99,16 +99,17 @@ const Notifications = (props) => {
             <ChatIcon color="primary" />
           );
         return (
-          <MenuItem key={notify.createdAt} onClick={handleClose}>
-            {icon}
-            <Typography
-              color={notify.read ? "primary" : "secondary"}
-              variant="body1"
-              onClick={(event) => navigate(notify.receiver, notify.screamId)}
-            >
-              {notify.sender} {verb} your scream {time}
-            </Typography>
-          </MenuItem>
+          <div onClick={(event) => navigate(notify.receiver, notify.screamId)}>
+            <MenuItem key={notify.createdAt} onClick={handleClose}>
+              {icon}
+              <Typography
+                color={notify.read ? "primary" : "secondary"}
+                variant="body1"
+              >
+                {notify.sender} {verb} your scream {time}
+              </Typography>
+            </MenuItem>
+          </div>
         );
       })
     ) : (

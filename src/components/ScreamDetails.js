@@ -94,7 +94,7 @@ const ScreamDetails = (props) => {
                         <Typography
                           variant="h5"
                           component={Link}
-                          to={`/users/${singleScream.handler}`}
+                          to={`/user/${singleScream.handler}`}
                           color="primary"
                         >
                           @{singleScream.handler}

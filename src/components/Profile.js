@@ -4,6 +4,7 @@ import { Link } from "react-router-dom/Link";
 import { connect } from "react-redux";
 
 import dayjs from "dayjs";
+import Skeleton from "react-loading-skeleton";
 
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -113,7 +114,7 @@ const Profile = (props) => {
                     </Tooltip>
                   </React.Fragment>
                 ) : (
-                  <p>Loading image...</p>
+                  <Skeleton width={200} height={200} circle={true} />
                 )}
               </div>
               <hr />

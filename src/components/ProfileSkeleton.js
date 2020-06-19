@@ -1,5 +1,7 @@
 import React from "react";
 
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+
 import Paper from "@material-ui/core/Paper";
 import withStyles from "@material-ui/core/styles/withStyles";
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -9,22 +11,13 @@ import CalendarToday from "@material-ui/icons/CalendarToday";
 import NoImg from "../images/blank-profile.png";
 
 const styles = {
-  handle: {
-    height: 20,
-    width: 60,
-    margin: "0 auto 7px auto",
+  paper: {
+    padding: 20,
   },
-  fullLine: {
-    height: 15,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    width: "100%",
-    marginBottom: 10,
-  },
-  halfLine: {
-    height: 15,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    width: "50%",
-    marginBottom: 10,
+  profile: {
+    "& .image-wrapper": {
+      textAlign: "center",
+    },
   },
 };
 
@@ -34,20 +27,23 @@ const ProfileSkeleton = (props) => {
     <Paper className={classes.paper}>
       <div className={classes.profile}>
         <div className="image-wrapper">
-          <img src={NoImg} alt="profile" className="profile-image" />
+          {/* <img src={NoImg} alt="profile" className="profile-image" /> */}
+          <Skeleton width={200} height={200} circle={true} />
         </div>
         <hr />
         <div className="profile-details">
-          <div className={classes.handle} />
+          <SkeletonTheme color="#40c4ff">
+            <Skeleton width={150} height={15} />
+          </SkeletonTheme>
+          <SkeletonTheme color="rgba(0,0,0, 0.6)">
+            <Skeleton width={250} height={15} />
+          </SkeletonTheme>
           <hr />
-          <div className={classes.fullLine} />
-          <div className={classes.fullLine} />
+          <LocationOn color="primary" /> <Skeleton width={150} height={15} />
           <hr />
-          <LocationOn color="primary" /> <span>Location</span>
+          <LinkIcon color="primary" /> <Skeleton width={150} height={15} />
           <hr />
-          <LinkIcon color="primary" /> https://website.com
-          <hr />
-          <CalendarToday color="primary" /> Joined date
+          <CalendarToday color="primary" /> <Skeleton width={100} height={15} />
         </div>
       </div>
     </Paper>

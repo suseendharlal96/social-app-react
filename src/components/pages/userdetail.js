@@ -78,7 +78,7 @@ const UserDetails = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [props.match.params.userhandler]);
   return (
     <React.Fragment>
       <Grid container spacing={6}>
