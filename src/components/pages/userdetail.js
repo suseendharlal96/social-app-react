@@ -60,6 +60,7 @@ const UserDetails = (props) => {
   const [screamId, setscreamId] = useState(null);
   const { classes } = props;
   useEffect(() => {
+    console.log(props);
     const userhandler = props.match.params.userhandler;
     const paramscreamId = props.match.params.screamId;
     console.log(props.match);

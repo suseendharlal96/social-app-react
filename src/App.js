@@ -39,7 +39,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Navbar />
+        <Route component={Navbar} path="/" />
         <div className="container">
           <Switch>
             <Route exact component={Home} path="/" />

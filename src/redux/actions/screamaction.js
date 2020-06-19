@@ -152,8 +152,10 @@ export const postScream = (screamData, token) => {
         dispatch(postScreamSuccess(res.data));
       })
       .catch((err) => {
-        dispatch(postScreamFail(err.response.data));
         console.log(err);
+        if (err.response && err.response.data) {
+          dispatch(postScreamFail(err.response.data));
+        }
       });
   };
 };

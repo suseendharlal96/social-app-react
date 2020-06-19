@@ -69,12 +69,20 @@ const screamStore = (state = initState, action) => {
       };
 
     case actionTypes.POST_SCREAM_SUCCESS:
+      let updatedScreamsData = [...state.screamData];
+      console.log("sd", updatedScreamsData);
+      updatedScreamsData = updatedScreamsData.concat(action.scream);
+      updatedScreamsData.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+      console.log(updatedScreamsData);
       return {
         ...state,
         errors: null,
         loading: false,
         postloading: false,
-        screamData: state.screamData.concat(action.scream).reverse(),
+        screamData: updatedScreamsData,
       };
 
     case actionTypes.POST_SCREAM_FAIL:

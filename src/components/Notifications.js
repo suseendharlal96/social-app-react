@@ -33,10 +33,29 @@ const Notifications = (props) => {
   };
 
   const menuOpen = () => {
+    if (
+      props &&
+      props.location &&
+      props.location.pathname.split("/").length === 5
+    ) {
+      props.history.replace(`/user/${props.location.pathname.split("/")[2]}`);
+    }
     let unreadNotificationIds = props.notifications.notifications
       .filter((notify) => notify.read === false)
       .map((notify) => notify.notificationId);
     props.markNotificationsRead(unreadNotificationIds);
+  };
+
+  const navigate = (receiver, screamId) => {
+    if (
+      props &&
+      props.location &&
+      props.location.pathname.split("/").length === 3
+    ) {
+      props.history.replace(`${receiver}/scream/${screamId}`);
+    } else {
+      props.history.replace(`user/${receiver}/scream/${screamId}`);
+    }
   };
 
   let notificationIcon;
@@ -83,10 +102,9 @@ const Notifications = (props) => {
           <MenuItem key={notify.createdAt} onClick={handleClose}>
             {icon}
             <Typography
-              component={Link}
-              color={notify.read ? "default" : "secondary"}
+              color={notify.read ? "primary" : "secondary"}
               variant="body1"
-              to={`user/${notify.receiver}/scream/${notify.screamId}`}
+              onClick={(event) => navigate(notify.receiver, notify.screamId)}
             >
               {notify.sender} {verb} your scream {time}
             </Typography>

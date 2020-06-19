@@ -34,7 +34,7 @@ const Navbar = (props) => {
               </IconButton>
             </Tooltip>
             <CreateScream />
-            <Notifications />
+            {props.userData ? <Notifications {...props} /> : null}
             <Tooltip title="Logout" placement="top">
               <IconButton onClick={logout}>
                 <ExitToAppIcon />
@@ -67,6 +67,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.authReducer.idToken !== null,
+    userData: state.userReducer.userData,
   };
 };
 
