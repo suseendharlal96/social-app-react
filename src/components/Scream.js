@@ -187,7 +187,7 @@ const Scream = (props) => {
     ) : null;
 
   return (
-    <Card className={classes.card}>
+    <Card id={props.screamId} className={classes.card}>
       <CardMedia
         image={imageUrl}
         title="profile-pic"
@@ -216,7 +216,9 @@ const Scream = (props) => {
             ? `Liked by you and ${+likeCount - 1} ${
                 +likeCount - 1 > 1 ? "others" : "other"
               }`
-            : `${+likeCount} likes`}
+            : +likeCount > 0
+            ? "likes"
+            : "like"}
         </span>
         {commentButton}
         <span>

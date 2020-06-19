@@ -19,6 +19,7 @@ import Edit from "@material-ui/icons/Edit";
 
 import * as actions from "../redux/actions/index";
 import EditProfile from "./EditProfile";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const styles = (theme) => ({
   paper: {
@@ -176,7 +177,7 @@ const Profile = (props) => {
           </Paper>
         )
       ) : (
-        <div>Loading profile...</div>
+        <ProfileSkeleton />
       )}
     </React.Fragment>
   );
