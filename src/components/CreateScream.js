@@ -28,7 +28,7 @@ const styles = {
 const CreateScream = (props) => {
   const [scream, setscream] = useState("");
   const [dialogue, setdialogue] = useState(false);
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState("");
 
   const { classes } = props;
 
@@ -38,6 +38,7 @@ const CreateScream = (props) => {
 
   const handleClose = () => {
     setdialogue(false);
+    setErrors("");
   };
 
   const handleChange = (event) => {
@@ -45,12 +46,12 @@ const CreateScream = (props) => {
   };
 
   const postScream = (event) => {
+    event.preventDefault();
     if (scream.length > 0) {
-      event.preventDefault();
       props.postScream({ scream: scream }, props.token);
       setdialogue(false);
     } else {
-      setErrors("Empty scream not allowed");
+      setErrors("Must not be empty.");
     }
   };
 
@@ -73,8 +74,8 @@ const CreateScream = (props) => {
               multiline
               fullWidth
               rows="3"
-              errors={errors}
-              helperText={errors.errors}
+              error={errors.length ? true : false}
+              helperText={errors}
               className={classes.textField}
               onChange={handleChange}
             />

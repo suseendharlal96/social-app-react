@@ -50,6 +50,7 @@ const Scream = (props) => {
 
   const [dialogueBox, setdialogueBox] = useState(false);
   const [comment, setComment] = useState("");
+  const [errors, setErrors] = useState("");
 
   const {
     classes,
@@ -91,6 +92,7 @@ const Scream = (props) => {
 
   const handleClose = () => {
     setdialogueBox(false);
+    setErrors("");
   };
 
   const handleCommentChange = (event) => {
@@ -98,9 +100,13 @@ const Scream = (props) => {
   };
 
   const postComment = () => {
-    props.postComment(screamId, { comment: comment }, props.token);
-    setdialogueBox(false);
-    setComment("");
+    if (comment.length !== 0) {
+      props.postComment(screamId, { comment: comment }, props.token);
+      setdialogueBox(false);
+      setComment("");
+    } else {
+      setErrors("Must not be empty");
+    }
   };
 
   const likeButton = !props.authenticated ? (
@@ -151,6 +157,8 @@ const Scream = (props) => {
             margin="dense"
             value={comment}
             id="name"
+            error={errors.length ? true : false}
+            helperText={errors}
             label="Comment"
             placeholder="Post a comment..."
             type="text"
