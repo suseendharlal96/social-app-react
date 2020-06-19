@@ -217,8 +217,8 @@ const Scream = (props) => {
                 +likeCount - 1 > 1 ? "others" : "other"
               }`
             : +likeCount > 0
-            ? "likes"
-            : "like"}
+            ? `${+likeCount}likes`
+            : `${+likeCount}like`}
         </span>
         {commentButton}
         <span>
