@@ -9,6 +9,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 import CardMedia from "@material-ui/core/CardMedia";
 import Tooltip from "@material-ui/core/Tooltip";
 import TextField from "@material-ui/core/TextField";
@@ -38,7 +39,7 @@ const styles = {
   },
   image: {
     width: "200px",
-    minWidth: "200px",
+    minWidth: "100px",
     height: "200px",
   },
   content: {
@@ -188,47 +189,55 @@ const Scream = (props) => {
 
   return (
     <Card id={props.screamId} className={classes.card}>
-      <CardMedia
-        image={imageUrl}
-        title="profile-pic"
-        className={classes.image}
-      ></CardMedia>
-      <CardContent className={classes.content}>
-        <Typography
-          variant="h5"
-          component={Link}
-          to={`user/${handler}`}
-          color="primary"
-        >
-          {handler}
-        </Typography>
-        {deleteScreamButton}
-        <Typography variant="body2" color="textSecondary">
-          Posted {dayjs(createdAt).fromNow()}
-        </Typography>
-        <Typography variant="body1">{scream}</Typography>
-        {likeButton}
-        <span>
-          {props.authenticated &&
-          props.userData &&
-          props.userData.likes &&
-          props.userData.likes.find((like) => like.screamId === props.screamId)
-            ? `Liked by you and ${+likeCount - 1} ${
-                +likeCount - 1 > 1 ? "others" : "other"
-              }`
-            : +likeCount > 1
-            ? `${+likeCount} likes`
-            : `${+likeCount} like`}
-        </span>
-        {commentButton}
-        <span>
-          {commentCount} {+commentCount > 1 ? "comments" : "comment"}
-        </span>
-        <ScreamDetails
-          scream={props.scream}
-          openIndividualScream={props.openIndividualScream || dialogueBox}
-        />
-      </CardContent>
+      <Grid container spacing={1}>
+        <Grid item sm={4} xs={12}>
+          <CardMedia
+            image={imageUrl}
+            title="profile-pic"
+            className={classes.image}
+          ></CardMedia>
+        </Grid>
+        <Grid item sm={8} xs={12}>
+          <CardContent className={classes.content}>
+            <Typography
+              variant="h5"
+              component={Link}
+              to={`user/${handler}`}
+              color="primary"
+            >
+              {handler}
+            </Typography>
+            {deleteScreamButton}
+            <Typography variant="body2" color="textSecondary">
+              Posted {dayjs(createdAt).fromNow()}
+            </Typography>
+            <Typography variant="body1">{scream}</Typography>
+            {likeButton}
+            <span>
+              {props.authenticated &&
+              props.userData &&
+              props.userData.likes &&
+              props.userData.likes.find(
+                (like) => like.screamId === props.screamId
+              )
+                ? `Liked by you and ${+likeCount - 1} ${
+                    +likeCount - 1 > 1 ? "others" : "other"
+                  }`
+                : +likeCount > 1
+                ? `${+likeCount} likes`
+                : `${+likeCount} like`}
+            </span>
+            {commentButton}
+            <span>
+              {commentCount} {+commentCount > 1 ? "comments" : "comment"}
+            </span>
+            <ScreamDetails
+              scream={props.scream}
+              openIndividualScream={props.openIndividualScream || dialogueBox}
+            />
+          </CardContent>
+        </Grid>
+      </Grid>
     </Card>
   );
 };

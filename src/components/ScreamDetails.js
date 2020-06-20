@@ -22,8 +22,10 @@ const styles = {
   invisibleBorder: {
     display: "none",
   },
-  expandpanel: {
-    width: "500px",
+  image: {
+    width: "200px",
+    minWidth: "100px",
+    height: "200px",
   },
   progress: {
     marginLeft: "45%",
@@ -88,7 +90,11 @@ const ScreamDetails = (props) => {
                   <ExpansionPanelDetails>
                     <Grid container spacing={10}>
                       <Grid item sm={5}>
-                        <img src={singleScream.imageUrl} alt="Profile" />
+                        <img
+                          src={singleScream.imageUrl}
+                          className={classes.image}
+                          alt="Profile"
+                        />
                       </Grid>
                       <Grid item sm={7}>
                         <Typography
