@@ -71,7 +71,7 @@ const styles = (theme) => ({
 });
 const Profile = (props) => {
   useEffect(() => {
-    if (props.authenticated) {
+    if (props.authenticated && !props.userData) {
       props.getProfile(props.token);
     }
   }, []);

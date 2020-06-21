@@ -12,7 +12,9 @@ import * as actions from "../../redux/actions/index";
 
 const Home = (props) => {
   useEffect(() => {
-    props.getScreams();
+    if (props.screamData && props.screamData.length === 0) {
+      props.getScreams();
+    }
   }, []);
   const screamData = !props.loading ? (
     props.screamData ? (

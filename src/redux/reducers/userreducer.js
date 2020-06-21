@@ -85,6 +85,13 @@ const userStore = (state = initState, action) => {
         ...state,
       };
 
+    case actionTypes.LOGOUT:
+      let updatedUserData = { ...state.userData };
+      updatedUserData = null;
+      return {
+        ...state,
+        userData: updatedUserData,
+      };
     default:
       return state;
   }
