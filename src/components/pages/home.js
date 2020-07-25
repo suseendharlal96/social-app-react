@@ -11,15 +11,15 @@ import * as actions from "../../redux/actions/index";
 const Home = (props) => {
   useEffect(() => {
     props.getScreams();
-  }, [props.userData]);
+  }, []);
   const screamData = !props.loading ? (
     props.screamData ? (
-      props.screamData.map((sc, index) => <Scream key={index} scream={sc} />)
+      props.screamData.map((sc, index) => <Scream key={sc.screamId} scream={sc} />)
     ) : (
       <p>No screams found</p>
     )
   ) : (
-    <p>Loading...</p>
+    <p>Loading your screams...</p>
   );
   return (
     <Grid container spacing={4}>

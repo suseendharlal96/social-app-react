@@ -40,3 +40,9 @@ export const authStart = (isSignup, authData, history) => {
       });
   };
 };
+
+export const logout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
+};

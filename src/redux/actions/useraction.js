@@ -32,19 +32,33 @@ export const getProfile = (token) => {
         console.log(res.data);
       })
       .catch((err) => {
-        console.log(err.response.data);
-        dispatch(getProfileFail());
+        console.log(err);
+        // dispatch(getProfileFail());
       });
   };
 };
 
-export const imageUpload = (formData) => {
+export const editProfile = (editData, token) => {
+  return (dispatch) => {
+    axios
+      .post("/user/addDetails", editData)
+      .then((res) => {
+        dispatch(getProfile(token));
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+export const imageUpload = (formData, token) => {
   console.log(formData);
   return (dispatch) => {
     axios
       .post("/user/image", formData)
       .then(() => {
-        dispatch(getProfile());
+        dispatch(getProfile(token));
         console.log("success");
       })
       .catch((err) => {

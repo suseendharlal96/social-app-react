@@ -28,6 +28,13 @@ const authStore = (state = initialState, action) => {
         loading: true,
         error: null,
       };
+    case actionTypes.AUTH_LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        idToken: null,
+      };
     default:
       return state;
   }

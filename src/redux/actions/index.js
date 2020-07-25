@@ -1,3 +1,3 @@
-export { authStart } from "./authaction";
+export { authStart, logout } from "./authaction";
 export { getScreams } from "./screamaction";
-export { getProfile, imageUpload } from "./useraction";
+export { getProfile, editProfile, imageUpload } from "./useraction";

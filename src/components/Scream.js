@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 const styles = {
   card: {
     display: "flex",
+    marginBottom: "15px",
   },
   image: {
     minWidth: "200px",
@@ -23,10 +24,32 @@ const styles = {
 };
 const Scream = (props) => {
   dayjs.extend(relativeTime);
+
   const {
     classes,
-    scream: { commentCount, likeCount, handler, imageUrl, scream, createdAt },
+    scream: {
+      screamId,
+      commentCount,
+      likeCount,
+      handler,
+      imageUrl,
+      scream,
+      createdAt,
+    },
   } = props;
+
+  const isScreamAlreadyLikedByThisUser=()=>{
+if(props.userData.likes && props.userData.likes.find(like=>like))
+  }
+
+  const likeScream = () => {
+    props.likeScream(screamId);
+  };
+
+  const unlikeScream = () => {
+    props.unlikeScream(screamId);
+  };
+
   return (
     <Card className={classes.card}>
       <CardMedia
