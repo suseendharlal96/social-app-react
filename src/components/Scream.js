@@ -39,7 +39,7 @@ const Scream = (props) => {
   } = props;
 
   const isScreamAlreadyLikedByThisUser=()=>{
-if(props.userData.likes && props.userData.likes.find(like=>like))
+// if(props.userData.likes && props.userData.likes.find(like=>like))
   }
 
   const likeScream = () => {
