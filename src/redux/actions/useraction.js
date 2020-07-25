@@ -43,32 +43,11 @@ export const getProfile = (token, isImageChange) => {
       })
       .catch((err) => {
         console.log(err);
-<<<<<<< HEAD
-        // dispatch(getProfileFail());
-      });
-  };
-};
-
-export const editProfile = (editData, token) => {
-  return (dispatch) => {
-    axios
-      .post("/user/addDetails", editData)
-      .then((res) => {
-        dispatch(getProfile(token));
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-=======
         dispatch(getProfileFail());
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
       });
   };
 };
 
-<<<<<<< HEAD
-export const imageUpload = (formData, token) => {
-=======
 const editProfileSuccess = (data) => {
   return {
     type: actionTypes.EDIT_PROFILE_SUCCESS,
@@ -93,17 +72,12 @@ export const editProfile = (data, token) => {
 
 export const imageUpload = (formData, token) => {
   axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
   console.log(formData);
   return (dispatch) => {
     axios
       .post("/user/image", formData)
       .then(() => {
-<<<<<<< HEAD
-        dispatch(getProfile(token));
-=======
         dispatch(getProfile(token, true));
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
         console.log("success");
       })
       .catch((err) => {

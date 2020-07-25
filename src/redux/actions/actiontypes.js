@@ -2,11 +2,7 @@
 export const AUTH_START = "AUTH_START";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAIL = "AUTH_FAIL";
-<<<<<<< HEAD
-export const AUTH_LOGOUT = "AUTH_LOGOUT";
-=======
 export const LOGOUT = "LOGOUT";
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
 // user
 export const GET_PROFILE = "GET_PROFILE";
 export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";

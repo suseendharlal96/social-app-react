@@ -1,8 +1,4 @@
 export { authStart, logout } from "./authaction";
-<<<<<<< HEAD
-export { getScreams } from "./screamaction";
-export { getProfile, editProfile, imageUpload } from "./useraction";
-=======
 
 export {
   getScreams,
@@ -20,4 +16,3 @@ export {
   imageUpload,
   markNotificationRead,
 } from "./useraction";
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c

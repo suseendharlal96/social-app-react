@@ -53,10 +53,6 @@ export const authStart = (isSignup, authData, history) => {
 
 export const logout = () => {
   return {
-<<<<<<< HEAD
-    type: actionTypes.AUTH_LOGOUT,
-=======
     type: actionTypes.LOGOUT,
->>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
   };
 };
