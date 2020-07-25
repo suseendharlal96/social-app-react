@@ -21,9 +21,19 @@ const getProfileFail = () => {
   };
 };
 
-export const getProfile = (token) => {
+const profilePicChangeSuccess = () => {
+  return {
+    type: actionTypes.PROFILE_PIC_CHANGE_SUCCESS,
+  };
+};
+
+export const getProfile = (token, isImageChange) => {
   return (dispatch) => {
-    dispatch(getProfileStart());
+    if (!isImageChange) {
+      dispatch(getProfileStart());
+    } else {
+      dispatch(profilePicChangeSuccess());
+    }
     axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
     axios
       .get("/user/profileDetails")
@@ -33,6 +43,7 @@ export const getProfile = (token) => {
       })
       .catch((err) => {
         console.log(err);
+<<<<<<< HEAD
         // dispatch(getProfileFail());
       });
   };
@@ -48,18 +59,71 @@ export const editProfile = (editData, token) => {
       })
       .catch((err) => {
         console.log(err);
+=======
+        dispatch(getProfileFail());
+>>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
+      });
+  };
+};
+
+<<<<<<< HEAD
+export const imageUpload = (formData, token) => {
+=======
+const editProfileSuccess = (data) => {
+  return {
+    type: actionTypes.EDIT_PROFILE_SUCCESS,
+    editData: data,
+  };
+};
+
+export const editProfile = (data, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+  return (dispatch) => {
+    axios
+      .post("/user/addDetails", data)
+      .then((res) => {
+        dispatch(editProfileSuccess(data));
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 };
 
 export const imageUpload = (formData, token) => {
+  axios.defaults.headers.common["Authorization"] = `bearer ${token}`;
+>>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
   console.log(formData);
   return (dispatch) => {
     axios
       .post("/user/image", formData)
       .then(() => {
+<<<<<<< HEAD
         dispatch(getProfile(token));
+=======
+        dispatch(getProfile(token, true));
+>>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
         console.log("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
+const markNotificationReadSuccess = () => {
+  return {
+    type: actionTypes.MARK_NOTIFICATIONS_READ,
+  };
+};
+
+export const markNotificationRead = (notificationsId) => {
+  return (dispatch) => {
+    axios
+      .post("/notifications", notificationsId)
+      .then((res) => {
+        dispatch(markNotificationReadSuccess());
       })
       .catch((err) => {
         console.log(err);

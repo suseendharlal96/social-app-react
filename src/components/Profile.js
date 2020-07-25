@@ -4,6 +4,7 @@ import { Link } from "react-router-dom/Link";
 import { connect } from "react-redux";
 
 import dayjs from "dayjs";
+import Skeleton from "react-loading-skeleton";
 
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -20,6 +21,7 @@ import Edit from "@material-ui/icons/Edit";
 
 import * as actions from "../redux/actions/index";
 import EditProfile from "./EditProfile";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 const styles = (theme) => ({
   paper: {
@@ -70,7 +72,7 @@ const styles = (theme) => ({
 });
 const Profile = (props) => {
   useEffect(() => {
-    if (props.authenticated) {
+    if (props.authenticated && !props.userData) {
       props.getProfile(props.token);
     }
   }, []);
@@ -101,22 +103,28 @@ const Profile = (props) => {
           <Paper className={classes.paper}>
             <div className={classes.profile}>
               <div className="image-wrapper">
-                <img
-                  className="profile-image"
-                  src={props.userData.credentials.imgUrl}
-                  alt="profile"
-                />
-                <input
-                  type="file"
-                  id="imageUpload"
-                  hidden="hidden"
-                  onChange={changeImage}
-                />
-                <Tooltip title="Edit profile picture" placement="top">
-                  <IconButton onClick={editPicture} className="button">
-                    <Edit color="primary" />
-                  </IconButton>
-                </Tooltip>
+                {!props.imageLoading ? (
+                  <React.Fragment>
+                    <img
+                      className="profile-image"
+                      src={props.userData.credentials.imgUrl}
+                      alt="profile"
+                    />
+                    <input
+                      type="file"
+                      id="imageUpload"
+                      hidden="hidden"
+                      onChange={changeImage}
+                    />
+                    <Tooltip title="Edit profile picture" placement="top">
+                      <IconButton onClick={editPicture} className="button">
+                        <Edit color="primary" />
+                      </IconButton>
+                    </Tooltip>
+                  </React.Fragment>
+                ) : (
+                  <Skeleton width={200} height={200} circle={true} />
+                )}
               </div>
               <hr />
               <div className="profile-details">
@@ -170,12 +178,7 @@ const Profile = (props) => {
                 )}
                 <hr />
               </div>
-              <Tooltip title="logout" placement="top">
-                <IconButton onClick={logout}>
-                  <KeyboardReturn color="secondary" />
-                </IconButton>
-              </Tooltip>
-              <EditProfile userData={props.userData} />
+              <EditProfile />
             </div>
           </Paper>
         ) : (
@@ -184,7 +187,7 @@ const Profile = (props) => {
           </Paper>
         )
       ) : (
-        <div>loading your profile...</div>
+        <ProfileSkeleton />
       )}
     </React.Fragment>
   );
@@ -195,15 +198,15 @@ const mapStateToProps = (state) => {
     authenticated: state.authReducer.idToken !== null,
     token: state.authReducer.idToken,
     loading: state.userReducer.loading,
+    imageLoading: state.userReducer.imageLoading,
     userData: state.userReducer.userData,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    getProfile: (token) => dispatch(actions.getProfile(token)),
+    getProfile: (token) => dispatch(actions.getProfile(token, false)),
     uploadImage: (formData, token) =>
       dispatch(actions.imageUpload(formData, token)),
-    logout: () => dispatch(actions.logout()),
   };
 };
 

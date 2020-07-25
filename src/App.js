@@ -1,14 +1,18 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import axios from "axios";
+
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 import "./App.css";
 import Home from "./components/pages/home";
 import Login from "./components/pages/login";
-import Signup from "./components/pages/signup";
+import UserProfile from "./components/pages/userdetail";
 import Navbar from "./components/Navbar";
 
+axios.defaults.baseURL =
+  "https://us-central1-social-react-a5a3b.cloudfunctions.net/api";
 const App = () => {
   const theme = createMuiTheme({
     palette: {
@@ -35,12 +39,17 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Navbar />
+        <Route component={Navbar} path="/" />
         <div className="container">
           <Switch>
             <Route exact component={Home} path="/" />
-            <Route component={Login} path="/login" />
-            <Route component={Signup} path="/signup" />
+            <Route exact component={Login} path="/login" />
+            <Route
+              exact
+              component={UserProfile}
+              path="/user/:userhandler/scream/:screamId"
+            />
+            <Route exact component={UserProfile} path="/user/:userhandler" />
           </Switch>
         </div>
       </BrowserRouter>

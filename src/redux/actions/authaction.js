@@ -32,17 +32,31 @@ export const authStart = (isSignup, authData, history) => {
     axios
       .post(url, authData)
       .then((res) => {
-        dispatch(authSuccess(res.data));
-        history.push("/");
+        if (!isSignup) {
+          dispatch(authSuccess(res.data));
+          history.push("/");
+        } else {
+          dispatch(authSuccess(res.data.token));
+          history.push("/");
+        }
       })
       .catch((err) => {
-        // dispatch(authFail(err.response.data));
+        console.log(err);
+        if (err && err.response && err.response.data) {
+          console.log(err.response);
+          console.log(err.response.data);
+          dispatch(authFail(err.response.data));
+        }
       });
   };
 };
 
 export const logout = () => {
   return {
+<<<<<<< HEAD
     type: actionTypes.AUTH_LOGOUT,
+=======
+    type: actionTypes.LOGOUT,
+>>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
   };
 };

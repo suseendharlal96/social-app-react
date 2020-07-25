@@ -5,17 +5,16 @@ import { connect } from "react-redux";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Button from "@material-ui/core/Button";
 import Tooltip from "@material-ui/core/Tooltip";
 import IconButton from "@material-ui/core/IconButton";
 
-import AddIcon from "@material-ui/icons/Add";
 import HomeIcon from "@material-ui/icons/Home";
-import ExitToApp from "@material-ui/icons/ExitToApp";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import Notifications from "@material-ui/icons/Notifications";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 import * as actions from "../redux/actions/index";
+import CreateScream from "./CreateScream";
+import Notifications from "./Notifications";
 
 const Navbar = (props) => {
   const logout = () => {
@@ -26,45 +25,37 @@ const Navbar = (props) => {
       <Toolbar className="nav-container">
         {props.authenticated ? (
           <React.Fragment>
-            <Link to="/">
-              <Tooltip title="Home" placement="top">
-                <IconButton>
+            <Tooltip title="Home" placement="top">
+              <IconButton>
+                <Link to="/">
                   <HomeIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            <Tooltip title="Post a scream!" placement="top">
-              <IconButton>
-                <AddIcon />
+                </Link>
               </IconButton>
             </Tooltip>
-            <Tooltip title="Notifications" placement="top">
-              <IconButton>
-                <Notifications />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title="logout" placement="top">
+            <CreateScream />
+            {props.userData ? <Notifications {...props} /> : null}
+            <Tooltip title="Logout" placement="top">
               <IconButton onClick={logout}>
-                <ExitToApp />
+                <ExitToAppIcon />
               </IconButton>
             </Tooltip>
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <Link to="/">
-              <Tooltip title="Home" placement="top">
-                <IconButton>
+            <Tooltip title="Home" placement="top">
+              <IconButton>
+                <Link to="/">
                   <HomeIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            <Link to="/login">
-              <Tooltip title="signup/signin" placement="top">
-                <IconButton>
-                  <AccountCircle />
-                </IconButton>
-              </Tooltip>
-            </Link>
+                </Link>
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Login/Signup" placement="top">
+              <IconButton>
+                <Link to="/login">
+                  <AccountCircleIcon />
+                </Link>
+              </IconButton>
+            </Tooltip>
           </React.Fragment>
         )}
       </Toolbar>
@@ -75,6 +66,7 @@ const Navbar = (props) => {
 const mapStateToProps = (state) => {
   return {
     authenticated: state.authReducer.idToken !== null,
+    userData: state.userReducer.userData,
   };
 };
 

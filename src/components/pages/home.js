@@ -6,30 +6,41 @@ import Grid from "@material-ui/core/Grid";
 
 import Scream from "../../components/Scream";
 import Profile from "../../components/Profile";
+
+import ScreamSkeleton from "../ScreamSkeleton";
 import * as actions from "../../redux/actions/index";
 
 const Home = (props) => {
   useEffect(() => {
-    props.getScreams();
+    if (props.screamData && props.screamData.length === 0) {
+      props.getScreams();
+    }
   }, []);
   const screamData = !props.loading ? (
     props.screamData ? (
-      props.screamData.map((sc, index) => <Scream key={sc.screamId} scream={sc} />)
+      props.screamData.map((sc, index) => (
+        <Scream
+          {...props}
+          key={sc.screamId}
+          screamId={sc.screamId}
+          scream={sc}
+        />
+      ))
     ) : (
       <p>No screams found</p>
     )
   ) : (
-    <p>Loading your screams...</p>
+    <ScreamSkeleton />
   );
   return (
     <Grid container spacing={4}>
-      <Grid item sm={8} xs={12}>
-        {screamData}
-      </Grid>
       <Grid item sm={4} xs={12}>
         <p>
           <Profile />
         </p>
+      </Grid>
+      <Grid style={{ height: "600px", overflow: "auto" }} item sm={8} xs={12}>
+        {screamData}
       </Grid>
     </Grid>
   );

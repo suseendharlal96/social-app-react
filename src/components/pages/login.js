@@ -98,8 +98,8 @@ const Login = (props) => {
             type="email"
             label="Email"
             value={email}
-            helperText={errors.email}
-            error={errors.email ? true : false}
+            helperText={props.errors ? props.errors.email : null}
+            error={props.errors ? (props.errors.email ? true : false) : null}
             className={classes.textField}
             onChange={handleInput}
             fullWidth
@@ -110,8 +110,8 @@ const Login = (props) => {
             type="password"
             label="Password"
             value={password}
-            helperText={errors.password}
-            error={errors.password ? true : false}
+            helperText={props.errors ? props.errors.password : null}
+            error={props.errors ? (props.errors.password ? true : false) : null}
             className={classes.textField}
             onChange={handleInput}
             fullWidth
@@ -124,8 +124,14 @@ const Login = (props) => {
                 type="password"
                 label="Confirm Password"
                 value={confirmPassword}
-                helperText={errors.confirmPassword}
-                error={errors.confirmPassword ? true : false}
+                helperText={props.errors ? props.errors.confirmPassword : null}
+                error={
+                  props.errors
+                    ? props.errors.confirmPassword
+                      ? true
+                      : false
+                    : null
+                }
                 className={classes.textField}
                 onChange={handleInput}
                 fullWidth
@@ -136,17 +142,19 @@ const Login = (props) => {
                 type="text"
                 label="Nick Name"
                 value={handler}
-                helperText={errors.handler}
-                error={errors.handler ? true : false}
+                helperText={props.errors ? props.errors.handler : null}
+                error={
+                  props.errors ? (props.errors.handler ? true : false) : null
+                }
                 className={classes.textField}
                 onChange={handleInput}
                 fullWidth
               />
             </React.Fragment>
           )}
-          {errors.error && (
+          {props.errors && props.errors.general && (
             <Typography variant="body2" className={classes.generalerror}>
-              {errors.general}
+              {props.errors.general}
             </Typography>
           )}
           <Button
@@ -169,6 +177,7 @@ const Login = (props) => {
           variant="outlined"
           className={classes.mode}
           color="secondary"
+          disabled={props.loading}
           onClick={toggleMode}
         >
           {loginMode ? "Switch to Signup" : "Switch to login"}
@@ -187,6 +196,7 @@ Login.propTypes = {
 const mapStateToProps = (state) => {
   return {
     loading: state.authReducer.loading,
+    errors: state.authReducer.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {

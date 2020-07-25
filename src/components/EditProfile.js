@@ -3,87 +3,89 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import withStyles from "@material-ui/core/styles/withStyles";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Tooltip from "@material-ui/core/Tooltip";
+import TextField from "@material-ui/core/TextField";
+import DialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 import EditIcon from "@material-ui/icons/Edit";
+
 import * as actions from "../redux/actions/index";
 
 const styles = {
-  TextField: {
-    marginBottom: "10px",
+  editbutton: {
+    position: "relative",
+    marginTop: "15px",
   },
-  button: {
-    float: "right",
+  textField: {
+    marginBottom: "15px",
   },
 };
 
 const EditProfile = (props) => {
   const [bio, setbio] = useState("");
-  const [website, setwebsite] = useState("");
   const [location, setlocation] = useState("");
-  const [dialogue, setDialogue] = useState(false);
+  const [website, setwebsite] = useState("");
+  const [dialogue, setdialogue] = useState(false);
 
   const { classes } = props;
 
   useEffect(() => {
-    console.log(bio);
-    setuserDetails(props.userData.credentials);
+    if (props.userData && props.userData.credentials) {
+      setUserDetails(props.userData.credentials);
+    }
   }, []);
 
+  const setUserDetails = (credentials) => {
+    setbio(credentials.bio);
+    setlocation(credentials.location);
+    setwebsite(credentials.website);
+  };
+
   const handleOpen = () => {
-    setDialogue(true);
-    setuserDetails(props.userData.credentials);
+    setdialogue(true);
+    setUserDetails(props.userData.credentials);
   };
 
   const handleClose = () => {
-    setDialogue(false);
+    setdialogue(false);
   };
 
-  const handleInput = (event) => {
+  const handleChange = (event) => {
     if (event.target.name === "bio") {
       setbio(event.target.value);
-    }
-    if (event.target.name === "website") {
-      setwebsite(event.target.value);
     }
     if (event.target.name === "location") {
       setlocation(event.target.value);
     }
-  };
-
-  const setuserDetails = (credentials) => {
-    setbio(credentials.bio ? credentials.bio : "");
-    setwebsite(credentials.website ? credentials.website : "");
-    setlocation(credentials.location ? credentials.location : "");
+    if (event.target.name === "website") {
+      setwebsite(event.target.value);
+    }
   };
 
   const handleSubmit = () => {
-    const editDetails = {
+    const userDetails = {
       bio: bio,
-      website: website,
       location: location,
+      website: website,
     };
-    console.log(editDetails);
-    props.editProfile(editDetails, props.token);
-    handleClose();
-  };
 
+    props.editProfile(userDetails, props.token);
+    setdialogue(false);
+  };
   return (
     <React.Fragment>
       <Tooltip title="Edit details" placement="top">
-        <IconButton onClick={handleOpen} className={classes.button}>
+        <IconButton onClick={handleOpen} className={classes.editbutton}>
           <EditIcon color="primary" />
         </IconButton>
       </Tooltip>
       <Dialog open={dialogue} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle>Edit your details</DialogTitle>
+        <DialogTitle>Modify your details</DialogTitle>
         <DialogContent>
           <form>
             <TextField
@@ -91,40 +93,40 @@ const EditProfile = (props) => {
               type="text"
               label="Bio"
               multiline
+              fullWidth
               rows="3"
-              placeholder="Write a short bio.."
-              className={classes.TextField}
+              placeholder="Write a short bio about yourself"
+              className={classes.textField}
               value={bio}
-              onChange={handleInput}
-              fullWidth
-            />
-            <TextField
-              name="website"
-              type="text"
-              label="Website"
-              placeholder="Your Personal/Professional website"
-              className={classes.TextField}
-              value={website}
-              onChange={handleInput}
-              fullWidth
-            />
+              onChange={handleChange}
+            ></TextField>
             <TextField
               name="location"
               type="text"
               label="Location"
-              placeholder="Where are u from.."
-              className={classes.TextField}
-              value={location}
-              onChange={handleInput}
               fullWidth
-            />
+              placeholder="Where are you located at"
+              className={classes.textField}
+              value={location}
+              onChange={handleChange}
+            ></TextField>
+            <TextField
+              name="website"
+              type="text"
+              label="Website"
+              fullWidth
+              placeholder="Your personal/professional website"
+              className={classes.textField}
+              value={website}
+              onChange={handleChange}
+            ></TextField>
           </form>
         </DialogContent>
         <DialogActions>
-          <Button color="secondary" onClick={handleClose}>
+          <Button onClick={handleClose} color="secondary">
             Cancel
           </Button>
-          <Button color="primary" onClick={handleSubmit}>
+          <Button onClick={handleSubmit} color="primary">
             Save Changes
           </Button>
         </DialogActions>
@@ -136,12 +138,14 @@ const EditProfile = (props) => {
 const mapStateToProps = (state) => {
   return {
     token: state.authReducer.idToken,
+    userData: state.userReducer.userData,
   };
 };
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    editProfile: (editData, token) =>
-      dispatch(actions.editProfile(editData, token)),
+    editProfile: (userDetails, token) =>
+      dispatch(actions.editProfile(userDetails, token)),
   };
 };
 

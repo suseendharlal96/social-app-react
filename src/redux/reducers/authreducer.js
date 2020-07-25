@@ -9,7 +9,6 @@ const initialState = {
 const authStore = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_SUCCESS:
-      console.log(action);
       return {
         ...state,
         idToken: action.idToken,
@@ -28,12 +27,21 @@ const authStore = (state = initialState, action) => {
         loading: true,
         error: null,
       };
+<<<<<<< HEAD
     case actionTypes.AUTH_LOGOUT:
       return {
         ...state,
         loading: false,
         error: null,
         idToken: null,
+=======
+    case actionTypes.LOGOUT:
+      return {
+        ...state,
+        idToken: null,
+        loading: false,
+        error: null,
+>>>>>>> 97648f69fee1f0ad7f5bb0ba46dbd0353a9bc81c
       };
     default:
       return state;
